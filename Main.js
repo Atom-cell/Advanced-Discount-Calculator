@@ -16,6 +16,7 @@ export default function Main({ route, navigation }) {
         onPress={() =>
           navigation.navigate("HistoryScreen", {
             history: history,
+            deletePrice: deletePrice,
           })
         }
         style={styles.histryBtn}
@@ -29,16 +30,6 @@ export default function Main({ route, navigation }) {
   const [save, setSave] = React.useState(0);
   const [fp, setFp] = React.useState(0);
   const [history, setHistory] = React.useState([]);
-
-  const historyList = route.params;
-
-  React.useEffect(() => {
-    if (historyList) {
-      console.log(historyList);
-      setHistory(historyList);
-    } else {
-    }
-  }, []);
 
   React.useEffect(() => {
     let disc = discount / 100;
@@ -78,9 +69,13 @@ export default function Main({ route, navigation }) {
     // setDiscount(0);
   };
 
+  const deletePrice = (newArr) => {
+    setHistory(newArr);
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 30 }}>Discount Calculator</Text>
+      {/* <Text style={{ fontSize: 30 }}>Discount Calculator</Text> */}
       <TextInput
         style={styles.input}
         placeholder="ENTER PRICE"
@@ -99,18 +94,8 @@ export default function Main({ route, navigation }) {
       <Text style={styles.txt}>Final Price: {fp}</Text>
       <View style={{ flexDirection: "row" }}>
         <Pressable onPress={() => saveHistory()} style={styles.btn}>
-          <Text>Save</Text>
+          <Text style={{ fontSize: 17 }}>SAVE</Text>
         </Pressable>
-        {/* <Pressable
-          onPress={() =>
-            navigation.navigate("HistoryScreen", {
-              history: history,
-            })
-          }
-          style={styles.btn}
-        >
-          <Text>Show History</Text>
-        </Pressable> */}
       </View>
     </View>
   );
@@ -142,12 +127,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: "#00a8ff",
     padding: 20,
-    paddingHorizontal: 40,
+    paddingHorizontal: 50,
     borderRadius: 50,
     marginHorizontal: 10,
-  },
-  histryBtn: {
-    padding: 10,
-    // backgroundColor: "#2196F3",
   },
 });

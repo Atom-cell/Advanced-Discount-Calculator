@@ -5,13 +5,12 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  Button,
 } from "react-native";
 import { DataTable } from "react-native-paper";
 import ShowModal from "./ShowModal";
 
 const History = ({ route, navigation }) => {
-  const { history } = route.params;
+  const { history, deletePrice } = route.params;
   const [showModal, setShowModal] = React.useState(false);
 
   React.useLayoutEffect(() => {
@@ -24,16 +23,21 @@ const History = ({ route, navigation }) => {
     });
   }, [navigation, setShowModal]);
 
+  React.useEffect(() => deletePrice(history));
   const deleteItem = (id) => {
-    // setHistoryList(history.filter((value) => value.index !== id));
+    // // setHistoryList(history.filter((value) => value.index !== id));
     navigation.setParams({
       history: history.filter((value) => value.index !== id),
     });
-    console.log(history);
   };
 
   const hideModal = (msg) => {
     setShowModal(!showModal);
+    if (msg === "ok") {
+      navigation.setParams({
+        history: [],
+      });
+    }
   };
 
   return (
@@ -46,22 +50,41 @@ const History = ({ route, navigation }) => {
                 Original Price
               </Text>
             </DataTable.Title>
-            <DataTable.Title numeric>Discount %</DataTable.Title>
-            <DataTable.Title numeric>Final Price</DataTable.Title>
+            <DataTable.Title numeric>
+              <Text style={{ fontWeight: "bold", fontSize: 14 }}>
+                Discount %
+              </Text>
+            </DataTable.Title>
+            <DataTable.Title numeric>
+              <Text style={{ fontWeight: "bold", fontSize: 14 }}>
+                Final Price
+              </Text>
+            </DataTable.Title>
             <DataTable.Title numeric></DataTable.Title>
           </DataTable.Header>
           <FlatList
             data={history}
             renderItem={({ item, index }) => (
               <DataTable.Row key={index}>
-                <DataTable.Cell>{item.originalPrice}</DataTable.Cell>
-                <DataTable.Cell numeric>
-                  {item.discountPercentage}
+                <DataTable.Cell>
+                  <DataTable.Cell numeric>
+                    <Text style={{ fontSize: 15 }}>{item.originalPrice}</Text>
+                  </DataTable.Cell>
                 </DataTable.Cell>
-                <DataTable.Cell numeric>{item.finalPrice}</DataTable.Cell>
-
                 <DataTable.Cell numeric>
-                  <TouchableOpacity onPress={() => deleteItem(item.index)}>
+                  <Text style={{ fontSize: 15 }}>
+                    {item.discountPercentage} %
+                  </Text>
+                </DataTable.Cell>
+                <DataTable.Cell numeric>
+                  <Text style={{ fontSize: 15 }}>{item.finalPrice}</Text>
+                </DataTable.Cell>
+                <DataTable.Cell numeric>
+                  <TouchableOpacity
+                    onPress={() => {
+                      deleteItem(item.index);
+                    }}
+                  >
                     <Text>❌</Text>
                   </TouchableOpacity>
                 </DataTable.Cell>
@@ -76,9 +99,9 @@ const History = ({ route, navigation }) => {
           />
         </DataTable>
       </View>
-      {/* <ShowModal /> */}
+
       {showModal ? <ShowModal show={true} hideModal={hideModal} /> : null}
-      <View style={{ height: "10%", backgroundColor: "white" }}>
+      {/* <View style={{ height: "10%", backgroundColor: "white" }}>
         <TouchableOpacity
           style={styles.backBtn}
           onPress={() =>
@@ -90,7 +113,7 @@ const History = ({ route, navigation }) => {
         >
           <Text>BACK</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -103,14 +126,14 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   list: {
-    height: "90%",
+    // height: "90%",
   },
-  backBtn: {
-    padding: 20,
-    backgroundColor: "grey",
-    width: "20%",
-    borderRadius: 50,
-    margin: 5,
-    backgroundColor: "#2196F3",
-  },
+  // backBtn: {
+  //   padding: 20,
+  //   backgroundColor: "grey",
+  //   width: "20%",
+  //   borderRadius: 50,
+  //   margin: 5,
+  //   backgroundColor: "#2196F3",
+  // },
 });

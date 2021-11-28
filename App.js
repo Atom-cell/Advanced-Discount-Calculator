@@ -11,24 +11,18 @@ const Stack = createNativeStackNavigator();
 export default function App({ navigation }) {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{}}>
         <Stack.Screen
           name="MainScreen"
           component={Main}
           options={{
             title: "Discount Calculator",
-            // headerRight: () => (
-            //   <Button
-            //     onPress={() => navigation.navigate("History")}
-            //     title="Show History"
-            //   />
-            // ),
           }}
         />
         <Stack.Screen
           name="HistoryScreen"
           component={History}
-          options={{ headerBackVisible: false }}
+          // options={{ headerBackVisible: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
