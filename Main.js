@@ -4,16 +4,41 @@ import {
   Text,
   View,
   TextInput,
+  TouchableOpacity,
   Pressable,
   Keyboard,
 } from "react-native";
 
-export default function Main({ navigation }) {
+export default function Main({ route, navigation }) {
+  navigation.setOptions({
+    headerRight: () => (
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("HistoryScreen", {
+            history: history,
+          })
+        }
+        style={styles.histryBtn}
+      >
+        <Text>Show History</Text>
+      </TouchableOpacity>
+    ),
+  });
   const [price, setPrice] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
   const [save, setSave] = React.useState(0);
   const [fp, setFp] = React.useState(0);
   const [history, setHistory] = React.useState([]);
+
+  const historyList = route.params;
+
+  React.useEffect(() => {
+    if (historyList) {
+      console.log(historyList);
+      setHistory(historyList);
+    } else {
+    }
+  }, []);
 
   React.useEffect(() => {
     let disc = discount / 100;
@@ -23,10 +48,10 @@ export default function Main({ navigation }) {
   });
 
   const checkprice = (num) => {
-    if (num == "-") {
-      alert("enter positive values only");
-    } else {
+    if (num >= 0) {
       setPrice(num);
+    } else {
+      alert("enter positive values only");
     }
   };
 
@@ -49,8 +74,8 @@ export default function Main({ navigation }) {
       };
       setHistory([...history, obj]);
     }
-    setPrice(0);
-    setDiscount(0);
+    // setPrice(0);
+    // setDiscount(0);
   };
 
   return (
@@ -76,7 +101,7 @@ export default function Main({ navigation }) {
         <Pressable onPress={() => saveHistory()} style={styles.btn}>
           <Text>Save</Text>
         </Pressable>
-        <Pressable
+        {/* <Pressable
           onPress={() =>
             navigation.navigate("HistoryScreen", {
               history: history,
@@ -85,7 +110,7 @@ export default function Main({ navigation }) {
           style={styles.btn}
         >
           <Text>Show History</Text>
-        </Pressable>
+        </Pressable> */}
       </View>
     </View>
   );
@@ -120,5 +145,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     borderRadius: 50,
     marginHorizontal: 10,
+  },
+  histryBtn: {
+    padding: 10,
+    // backgroundColor: "#2196F3",
   },
 });
