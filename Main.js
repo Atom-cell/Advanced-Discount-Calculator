@@ -9,7 +9,7 @@ import {
   Keyboard,
 } from "react-native";
 
-export default function Main({ route, navigation }) {
+export default function Main({ navigation }) {
   navigation.setOptions({
     headerRight: () => (
       <TouchableOpacity
@@ -21,7 +21,7 @@ export default function Main({ route, navigation }) {
         }
         style={styles.histryBtn}
       >
-        <Text>Show History</Text>
+        <Text>Show History ⏭</Text>
       </TouchableOpacity>
     ),
   });
@@ -64,9 +64,10 @@ export default function Main({ route, navigation }) {
         index: Math.random(),
       };
       setHistory([...history, obj]);
+      console.log(history);
     }
-    // setPrice(0);
-    // setDiscount(0);
+    setPrice(0);
+    setDiscount(0);
   };
 
   const deletePrice = (newArr) => {

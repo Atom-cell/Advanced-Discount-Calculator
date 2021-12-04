@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -8,7 +7,7 @@ import Main from "./Main";
 
 const Stack = createNativeStackNavigator();
 
-export default function App({ navigation }) {
+export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{}}>
@@ -19,11 +18,7 @@ export default function App({ navigation }) {
             title: "Discount Calculator",
           }}
         />
-        <Stack.Screen
-          name="HistoryScreen"
-          component={History}
-          // options={{ headerBackVisible: false }}
-        />
+        <Stack.Screen name="HistoryScreen" component={History} />
       </Stack.Navigator>
     </NavigationContainer>
   );

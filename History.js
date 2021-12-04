@@ -25,7 +25,6 @@ const History = ({ route, navigation }) => {
 
   React.useEffect(() => deletePrice(history));
   const deleteItem = (id) => {
-    // // setHistoryList(history.filter((value) => value.index !== id));
     navigation.setParams({
       history: history.filter((value) => value.index !== id),
     });
@@ -60,7 +59,7 @@ const History = ({ route, navigation }) => {
                 Final Price
               </Text>
             </DataTable.Title>
-            <DataTable.Title numeric></DataTable.Title>
+            <DataTable.Title></DataTable.Title>
           </DataTable.Header>
           <FlatList
             data={history}
@@ -101,19 +100,6 @@ const History = ({ route, navigation }) => {
       </View>
 
       {showModal ? <ShowModal show={true} hideModal={hideModal} /> : null}
-      {/* <View style={{ height: "10%", backgroundColor: "white" }}>
-        <TouchableOpacity
-          style={styles.backBtn}
-          onPress={() =>
-            navigation.navigate({
-              name: "MainScreen",
-              params: { history: history },
-            })
-          }
-        >
-          <Text>BACK</Text>
-        </TouchableOpacity>
-      </View> */}
     </View>
   );
 };
@@ -128,12 +114,4 @@ const styles = StyleSheet.create({
   list: {
     // height: "90%",
   },
-  // backBtn: {
-  //   padding: 20,
-  //   backgroundColor: "grey",
-  //   width: "20%",
-  //   borderRadius: 50,
-  //   margin: 5,
-  //   backgroundColor: "#2196F3",
-  // },
 });
